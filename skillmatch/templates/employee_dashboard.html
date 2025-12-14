@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/employee_dashboard.css') }}">
+</head>
+
+<body>
+    <h2>Welcome, {{ username }} (Employer)</h2>
+
+    <h3>Post Job</h3>
+    <form method="post">
+        <input type="text" name="job_title" placeholder="Job Title" required>
+        <input type="text" name="required_skills" placeholder="Required Skills (comma-separated)" required>
+        <button type="submit">Post Job</button>
+    </form>
+
+    <h3>Your Posted Jobs</h3>
+    {% for job in jobs %}
+        <div class="job-box">
+            <h4>{{ job[1] }}</h4>
+            <p><strong>Required Skills:</strong> {{ job[2] }}</p>
+
+            <h5>Applicants:</h5>
+            {% if job_applicants[job[0]] %}
+            <table>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Skills</th>
+                </tr>
+                {% for applicant in job_applicants[job[0]] %}
+                <tr>
+                    <td>{{ applicant[0] }}</td>
+                    <td>{{ applicant[1] or 'No skills added' }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p>No applicants yet.</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+</body>
+</html>

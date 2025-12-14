@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skill Match Result</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 30px;
+            background-color: #f9f9f9;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .score {
+            font-size: 22px;
+            color: green;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            background: #eee;
+            margin-bottom: 8px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Skill Match Result for: {{ job_title }}</h2>
+        <p class="score">Match Score: <strong>{{ match_score }}%</strong></p>
+
+        <h3>Your Skills:</h3>
+        <ul>
+            {% for skill in student_skills %}
+            <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Job Requires:</h3>
+        <ul>
+            {% for skill in job_skills %}
+            <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Missing Skills:</h3>
+        {% if missing_skills %}
+        <ul>
+            {% for skill in missing_skills %}
+            <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>✅ You have all required skills!</p>
+        {% endif %}
+
+        <div class="back-link">
+            <a href="{{ url_for('student_dashboard') }}">← Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Jobs</title>
+</head>
+<body>
+    <h2>Job Listings</h2>
+    <ul>
+        {% for job in jobs %}
+            <li>
+                <b>{{ job[1] }}</b> - Required Skills: {{ job[2] }}
+                <br>
+                {% for student in students %}
+                    <form action="/apply/{{ job[0] }}/{{ student[0] }}" method="get">
+                        <button type="submit">Apply as {{ student[1] }}</button>
+                    </form>
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

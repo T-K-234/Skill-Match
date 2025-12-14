@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student_dashboard.css') }}">
+</head>
+
+<body>
+    <h2>Welcome, {{ username }} (Student)</h2>
+
+    <!-- Add Skill -->
+    <h3>Add Skill</h3>
+    <form method="post">
+        <input type="text" name="skill" placeholder="Enter skill" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <!-- Add Certification -->
+    <h3>Certifications</h3>
+    <form method="post">
+        <input type="text" name="certification" placeholder="Enter certification" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <!-- Show Skills -->
+    <h3>Your Skills</h3>
+    <table>
+        <tr><th>Skill</th></tr>
+        {% for skill in skills %}
+        <tr><td>{{ skill }}</td></tr>
+        {% endfor %}
+    </table>
+
+    <!-- Show Certifications -->
+    <h3>Your Certifications</h3>
+    <table>
+        <tr><th>Certification</th></tr>
+        {% for cert in certs %}
+        <tr><td>{{ cert }}</td></tr>
+        {% endfor %}
+    </table>
+
+    <!-- Available Jobs -->
+    <h3>Available Jobs</h3>
+    <table>
+        <tr>
+            <th>Job Title</th>
+            <th>Required Skills</th>
+            <th>Action</th>
+        </tr>
+        {% for job in jobs %}
+        <tr>
+            <td>{{ job[1] }}</td>
+            <td>{{ job[2] }}</td>
+            <td>
+                {% if job[0] in applied_job_ids %}
+                    <button disabled>Applied</button>
+                {% else %}
+                    <form method="post" style="display:inline;">
+                        <input type="hidden" name="apply_job_id" value="{{ job[0] }}">
+                        <button type="submit">Apply</button>
+                    </form>
+                {% endif %}
+                <a href="{{ url_for('match_skills', job_id=job[0]) }}">
+                    <button type="button">Match</button>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
